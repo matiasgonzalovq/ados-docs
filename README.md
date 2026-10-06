@@ -28,8 +28,26 @@ Sin framework: **Vite + TypeScript**. Capas separadas en `domain` (lógica pura)
   producción.
 - Persistencia local de respaldo (localStorage) para no perder datos previos a la
   sesión conectada.
-- Interfaz en español, pensada para teléfono y escritorio, con objetivo de
-  accesibilidad WCAG 2.1 AA (ver `PRODUCT.md`).
+  - Interfaz en español, pensada para teléfono y escritorio, con objetivo de
+    accesibilidad WCAG 2.1 AA (ver `PRODUCT.md`).
+
+## Capturas
+
+Capturas reales de la aplicación ejecutándose en local con los emuladores de
+Firebase y un proyecto de demostración (`demo-*`), usando datos de ejemplo. No
+provienen de ningún entorno de producción.
+
+| Inicio de sesión | Mis cotizaciones |
+| --- | --- |
+| ![Inicio de sesión](docs/screenshots/02-inicio-sesion.png) | ![Mis cotizaciones](docs/screenshots/01-workspace-cotizaciones.png) |
+
+| Editor de cotización | Catálogo de ítems |
+| --- | --- |
+| ![Editor de cotización](docs/screenshots/03-editor-cotizacion.png) | ![Catálogo de ítems](docs/screenshots/04-catalogo-items.png) |
+
+| Ajustes y perfil |
+| --- |
+| ![Ajustes y perfil](docs/screenshots/05-ajustes-perfil.png) |
 
 ## Estado
 

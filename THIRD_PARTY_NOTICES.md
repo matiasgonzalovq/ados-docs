@@ -5,7 +5,7 @@ empaquetan dependencias de terceros, y las herramientas de desarrollo también s
 instalan al hacer `npm ci`. Cada dependencia conserva su licencia y su copyright
 originales; nada de lo que sigue se re-licencia bajo AGPL-3.0-only.
 
-Resumen del árbol instalado (666 paquetes, verificado con `npm ls --all`):
+Resumen del árbol instalado (825 paquetes, verificado con `npm ls --all`):
 
 - Licencias permisivas: MIT, Apache-2.0, ISC, BSD-2/3-Clause, 0BSD, BlueOak-1.0.0,
   CC0-1.0, Python-2.0, dominio público.

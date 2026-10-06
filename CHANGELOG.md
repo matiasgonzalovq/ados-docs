@@ -55,9 +55,11 @@ como *ADOS Obras* y no llevaba changelog.
 - `dompurify` 3.4.13 → 3.4.16 y `source-map-js` 1.2.1 → 1.2.2 vía
   `npm audit fix` (sin cambios mayores); la suite completa volvió a quedar en
   verde.
-- **Conocido**: quedan 4 avisos altos en `@grpc/grpc-js` (cadena de
-  `firebase@11`, solo transporte gRPC en Node, no forma parte del bundle del
-  navegador). Ver `README.md` y el reporte de fase en el repositorio.
+- **Conocido**: `npm audit` reporta 16 avisos (12 altos, 4 moderados) en la
+  cadena de `firebase` y `firebase-tools` (entre ellos `@grpc/grpc-js`); afectan
+  a dependencias de transporte/CLI que no forman parte del bundle del navegador y
+  se aceptan como riesgo documentado mientras no haya corrección sin salto
+  mayor. Ver el detalle de licencias en `THIRD_PARTY_NOTICES.md`.
 
 ## Notas
 
