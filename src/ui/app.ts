@@ -598,9 +598,6 @@ export class App {
   }
 
   private bindAuth(): void {
-    this.root.querySelector('[data-action="auth-submit"]')?.addEventListener('click', () => {
-      void this.submitAuth()
-    })
     this.root.querySelector('[data-action="auth-toggle"]')?.addEventListener('click', () => {
       this.authMode = this.authMode === 'login' ? 'register' : 'login'
       this.render()

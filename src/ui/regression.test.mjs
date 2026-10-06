@@ -89,6 +89,14 @@ let chrome
 let ws
 let msgId = 0
 const pending = new Map()
+const netRequests = []
+
+function countNet(fragment, from = 0, method = null) {
+  return netRequests
+    .slice(from)
+    .filter((r) => r.url.includes(fragment) && (!method || r.method === method))
+    .length
+}
 
 function send(method, params = {}) {
   return new Promise((resolve, reject) => {
@@ -254,10 +262,15 @@ async function main() {
       if (d.error) p.reject(new Error(d.error.message))
       else p.resolve(d)
       pending.delete(d.id)
+      return
+    }
+    if (d.method === 'Network.requestWillBeSent') {
+      netRequests.push({ url: d.params.request.url, method: d.params.request.method })
     }
   }
   await send('Runtime.enable')
   await send('Page.enable')
+  await send('Network.enable')
   rmSync(DL_DIR, { recursive: true, force: true })
   mkdirSync(DL_DIR, { recursive: true })
   try {
@@ -322,15 +335,19 @@ async function runAll() {
   check('se va a modo registro', (await text('#view h2')) === 'Crear cuenta')
   await setValue('[data-auth-email]', TEST_EMAIL)
   await setValue('[data-auth-password]', TEST_PASS)
+  const signUpFrom = netRequests.length
   await clickAction('auth-submit')
   await sleep(2500)
   check('registrado y en inicio', (await count('.budget-list')) >= 0 || (await count('.issuer-list')) >= 0 || !!(await evalJs(`!!document.querySelector('[data-action="go-inicio"]')`)))
+  const signUps = countNet('accounts:signUp', signUpFrom, 'POST')
+  check('registro: una sola operación de signUp', signUps === 1, `signUp=${signUps}`)
 
   // cerrar sesión y volver a iniciar con la misma cuenta (sesión única)
   await clickAction('go-config')
   await clickAction('logout')
   await sleep(1500)
   check('logout vuelve a auth', !!(await evalJs(`!!document.querySelector('[data-auth-form]')`)))
+  check('logout: sin error obsoleto de correo en uso', !(await bodyText()).includes('El correo ya está registrado.'))
   await ensureLoginMode()
   await setValue('[data-auth-email]', TEST_EMAIL)
   await setValue('[data-auth-password]', TEST_PASS)
