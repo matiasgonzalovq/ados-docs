@@ -38,6 +38,13 @@ como *ADOS Obras* y no llevaba changelog.
   proyecto Firebase predefinido.
 - Especificación `pdf-export` alineada con el comportamiento real: el PDF
   muestra «Exportado por ADOS DOCS» y no incluye crédito personal en el pie.
+- `public/favicon.svg` reemplazado por una variante propia derivada de
+  `public/icons/icon.svg` (ver `THIRD_PARTY_NOTICES.md`); el favicon anterior
+  tenía procedencia no documentada. Descriptor público del proyecto unificado
+  como *Open-source document workspace* (README y `package.json`).
+- Historial de la rama de publicación reconstruido como un único commit raíz
+  (higiene prepublicación); el historial completo se conserva en una referencia
+  local de respaldo.
 
 ### Security
 

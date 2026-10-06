@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "description": "PWA en español para crear, ajustar y compartir cotizaciones de construcción en CLP con exportación a PDF (Firebase propio, datos por usuario)",
+  "description": "Open-source document workspace: PWA en español para crear, ajustar y compartir cotizaciones de construcción en CLP con exportación a PDF (Firebase propio, datos por usuario)",
   "license": "AGPL-3.0-only",
   "author": "Matías Valdebenito Quezada",
   "keywords": [

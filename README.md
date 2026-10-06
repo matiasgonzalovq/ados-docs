@@ -2,6 +2,8 @@
 
 [![Licencia: AGPL-3.0-only](https://img.shields.io/badge/licencia-AGPL--3.0--only-blue.svg)](LICENSE)
 
+> **Descriptor:** *Open-source document workspace*.
+
 **ADOS Docs** es una PWA en español para crear, ajustar, guardar y compartir
 **cotizaciones de construcción en CLP**: clientes, secciones, partidas, cálculos
 explicables y exportación a PDF (detallado y resumen).

@@ -56,7 +56,12 @@ se documenta aquí como salvedad conocida y candidata a sustitución.
 
 - **Tipografías**: no se cargan fuentes externas. La aplicación usa la pila del
   sistema (`system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif`).
-- **Iconos e imágenes** (`public/favicon.svg`, `public/icons/*`): recursos
-  propios del proyecto; no provienen de librerías de iconos de terceros.
+- **Iconos e imágenes** (`public/icons/*`): recursos propios del proyecto
+  (`icon.svg` y sus exportaciones PNG); no provienen de librerías de iconos de
+  terceros.
+- **Favicon** (`public/favicon.svg`): variante propia generada desde
+  `public/icons/icon.svg` (mismo trazado, `viewBox` 512). Sustituye al favicon
+  anterior de procedencia no documentada (exportación con efecto de desenfoque,
+  no atribuible) durante la higiene prepublicación F6.5.
 - No hay recursos remotos en `index.html` ni en el CSS: ningún `<link>`,
   `<script>` o `@import` apunta a CDNs.
