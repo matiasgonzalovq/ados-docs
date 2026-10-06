@@ -1,0 +1,48 @@
+{
+  "name": "ados-docs",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "PWA en español para crear, ajustar y compartir cotizaciones de construcción en CLP con exportación a PDF (Firebase propio, datos por usuario)",
+  "license": "AGPL-3.0-only",
+  "author": "Matías Valdebenito Quezada",
+  "keywords": [
+    "cotizaciones",
+    "presupuestos",
+    "construccion",
+    "pwa",
+    "firebase",
+    "pdf",
+    "es"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "node src/domain/tests.ts",
+    "test:safety": "node --test scripts/safety.test.mjs",
+    "test:rules": "node scripts/run-rules.mjs",
+    "test:regression": "node scripts/run-regression.mjs",
+    "scan": "node scripts/scan.mjs",
+    "verify": "npm run typecheck && npm run lint && npm test && npm run test:safety && npm run build",
+    "verify:all": "npm run verify && npm run test:rules && npm run test:regression"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@firebase/rules-unit-testing": "^4.0.1",
+    "eslint": "^10.12.0",
+    "firebase-tools": "15.32.1",
+    "globals": "^16.5.0",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.71.1",
+    "vite": "^8.2.0"
+  },
+  "dependencies": {
+    "firebase": "^11.10.0",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.8"
+  }
+}

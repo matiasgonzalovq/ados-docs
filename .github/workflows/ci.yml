@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify (typecheck, lint, unit, safety, build)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+      - run: npm run test:safety
+      - run: npm run build
+
+  emulators:
+    name: Firestore rules + regression (emuladores locales)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      REGRESSION_PROJECT_ID: demo-ados-docs
+      RULES_PROJECT_ID: demo-ados-docs
+      REGRESSION_AUTH_EMULATOR_HOST: 127.0.0.1:9099
+      REGRESSION_FIRESTORE_EMULATOR_HOST: 127.0.0.1:8086
+      RULES_FIRESTORE_EMULATOR_HOST: 127.0.0.1:8086
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: npm ci
+      - run: npm run test:rules
+      - run: npm run test:regression
