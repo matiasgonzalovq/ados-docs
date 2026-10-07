@@ -63,5 +63,7 @@ como *ADOS Obras* y no llevaba changelog.
 
 ## Notas
 
+- Primera publicación open source planificada como **`0.1.0`**: el repositorio
+  todavía no tiene etiquetas ni release de GitHub.
 - El proyecto aún no tiene releases etiquetadas; la rama principal es la única
   versión soportada (ver `SECURITY.md`).

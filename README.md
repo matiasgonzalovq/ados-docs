@@ -28,8 +28,8 @@ Sin framework: **Vite + TypeScript**. Capas separadas en `domain` (lógica pura)
   producción.
 - Persistencia local de respaldo (localStorage) para no perder datos previos a la
   sesión conectada.
-  - Interfaz en español, pensada para teléfono y escritorio, con objetivo de
-    accesibilidad WCAG 2.1 AA (ver `PRODUCT.md`).
+- Interfaz en español, pensada para teléfono y escritorio, con objetivo de
+  accesibilidad WCAG 2.1 AA (ver `PRODUCT.md`).
 
 ## Capturas
 
@@ -70,9 +70,14 @@ cambios especs antes de implementarse (ver *Flujo de trabajo*).
 
 ## Requisitos
 
-- Node.js 20.19+ (o 22.13+/24+) y npm.
+- **Node.js 24 LTS** (recomendado). También funcionan 20.19+ y 22.13+. Node 26
+  aún no está declarado por `superstatic`, una herramienta transitiva de
+  `firebase-tools` (aviso cosmético `EBADENGINE`): el build y las pruebas
+  funcionan igual.
+- npm (incluido con Node).
 - Una cuenta de [Firebase](https://console.firebase.google.com) propia, solo si
-  quieres usar la app con datos reales.
+  quieres usar la app con datos reales. Para desarrollo local no hace falta:
+  usa los emuladores (ver más abajo).
 - JDK 17+ (solo para las pruebas que arrancan el emulador de Firestore).
 
 `firebase-tools` es una devDependency: se instala con `npm ci`, no hace falta
@@ -95,6 +100,59 @@ Rellena `.env.local` con los datos de **tu** proyecto Firebase:
 
 Tus datos viven en tu proyecto: el código de este repositorio no apunta a ningún
 proyecto predefinido y `.firebaserc` no está versionado a propósito.
+
+### Desarrollo local con emuladores (sin cuenta Firebase)
+
+Puedes ejecutar la app completa en tu equipo con la **Firebase Emulator Suite**,
+sin proyecto real ni credenciales. Usa siempre un `projectId` con prefijo
+`demo-`: solo existe dentro de los emuladores.
+
+1. Crea tu `.env.local` a partir de la plantilla y define una configuración de
+   demostración con los hosts de los emuladores:
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+   ```
+   VITE_FIREBASE_API_KEY=demo-api-key
+   VITE_FIREBASE_AUTH_DOMAIN=demo-ados-docs.firebaseapp.com
+   VITE_FIREBASE_PROJECT_ID=demo-ados-docs
+   VITE_FIREBASE_APP_ID=1:000000000000:web:demo
+   VITE_FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9099
+   VITE_FIREBASE_FIRESTORE_EMULATOR_HOST=127.0.0.1:8086
+   ```
+
+   Si defines `*_EMULATOR_HOST`, la app usa los emuladores y no hace peticiones
+   a Internet.
+
+2. Arranca los emuladores (Auth + Firestore) en una terminal:
+
+   ```bash
+   npx firebase emulators:start --config firebase.emulators.json --project demo-ados-docs
+   ```
+
+3. En otra terminal, arranca el servidor de desarrollo y abre la URL que
+   indique Vite (por defecto `http://localhost:5173`):
+
+   ```bash
+   npm run dev
+   ```
+
+4. Para detenerlo, pulsa `Ctrl+C` en cada terminal.
+
+Puertos usados por defecto:
+
+| Servicio | Puerto |
+| --- | --- |
+| Dev server (Vite) | `5173` |
+| Auth Emulator | `9099` |
+| Firestore Emulator | `8086` |
+
+Los emuladores viven en memoria y no contactan ningún proyecto real. Asegúrate
+de que esos puertos estén libres antes de arrancar (si están ocupados, cierra el
+proceso anterior). `npm run test:rules` y `npm run test:regression` levantan los
+emuladores por su cuenta.
 
 ## Scripts
 
@@ -194,7 +252,8 @@ src/storage  persistencia local (localStorage) de respaldo
 src/pdf      generación de PDF
 src/ui       vistas, estilos y la suite de regresión (scripts + emuladores)
 scripts      guardia de entorno, escaneo de secretos y lanzadores de pruebas
-.github/     workflows de CI (solo gates locales)
+.github/     workflows de CI (solo gates locales) y plantillas de issues/PR
+docs/        capturas usadas en este README
 openspec/    especificaciones del producto (specs y cambios)
 PRODUCT.md   definición de producto
 .opencode/   comandos/skills opcionales de OpenSpec para agentes (MIT)

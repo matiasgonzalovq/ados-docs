@@ -1,0 +1,25 @@
+name: Propuesta
+description: Sugerir una mejora o una nueva capacidad.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: ¿Qué problema resuelve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Propuesta
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativas consideradas
+  - type: markdown
+    attributes:
+      value: |
+        Los cambios de comportamiento observable se plantean como cambio
+        OpenSpec; ver [`CONTRIBUTING.md`](../../CONTRIBUTING.md).
