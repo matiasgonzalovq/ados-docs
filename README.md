@@ -1,6 +1,7 @@
 # ADOS Docs
 
 [![Licencia: AGPL-3.0-only](https://img.shields.io/badge/licencia-AGPL--3.0--only-blue.svg)](LICENSE)
+[![CI](https://github.com/matiasgonzalovq/ados-docs/actions/workflows/ci.yml/badge.svg)](https://github.com/matiasgonzalovq/ados-docs/actions/workflows/ci.yml)
 
 > **Descriptor:** *Open-source document workspace*.
 

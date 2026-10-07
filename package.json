@@ -6,6 +6,14 @@
   "description": "Open-source document workspace: PWA en español para crear, ajustar y compartir cotizaciones de construcción en CLP con exportación a PDF (Firebase propio, datos por usuario)",
   "license": "AGPL-3.0-only",
   "author": "Matías Valdebenito Quezada",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matiasgonzalovq/ados-docs.git"
+  },
+  "homepage": "https://github.com/matiasgonzalovq/ados-docs",
+  "bugs": {
+    "url": "https://github.com/matiasgonzalovq/ados-docs/issues"
+  },
   "engines": {
     "node": "^20.19.0 || ^22.13.0 || ^24.0.0"
   },
