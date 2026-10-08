@@ -62,6 +62,7 @@ export class App {
   editingIssuerDraft: { logoDataUrl?: string; signatureDataUrl?: string } = {}
   editingIssuerData: IssuerProfile | null = null
   isExistingEdit = false
+  dirty = false
   toastTimer: number | null = null
   editingCatalogItemId: string | null = null
   catalogSearch: string = ''
@@ -385,6 +386,7 @@ export class App {
       this.editingItemSectionId = null
       this.editingIssuerId = null
       this.isExistingEdit = false
+      this.dirty = false
     }
     this.render()
   }
@@ -398,6 +400,7 @@ export class App {
     this.editingItemSectionId = null
     this.editingIssuerId = null
     this.isExistingEdit = true
+    this.dirty = false
     this.view = 'presupuesto'
     this.render()
   }
@@ -411,6 +414,7 @@ export class App {
     this.editingItemSectionId = null
     this.editingIssuerId = null
     this.isExistingEdit = false
+    this.dirty = false
     this.view = 'presupuesto'
     this.render()
   }
@@ -440,6 +444,7 @@ export class App {
     this.editingItemId = null
     this.editingItemSectionId = null
     this.isExistingEdit = false
+    this.dirty = false
     this.view = 'presupuesto'
     this.render()
   }

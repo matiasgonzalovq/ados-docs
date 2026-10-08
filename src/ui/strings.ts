@@ -217,6 +217,7 @@ export const STRINGS = {
   descargarResumido: 'Descargar PDF resumido',
   eliminar: 'Eliminar',
   confirmEliminarCotizacion: '¿Eliminar esta cotización? Esta acción no se puede deshacer.',
+  confirmDiscardUnsaved: '¿Descartar cambios sin guardar?',
   duplicated: 'Cotización duplicada.',
   eliminado: 'Cotización eliminada.',
 

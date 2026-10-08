@@ -734,6 +734,46 @@ async function runAll() {
   check('archivada devuelta a Pendiente', (await text('.budget-card .badge-status')) === 'Pendiente')
   check('vuelve a cotizaciones activas', (await sectionCards('Cotizaciones activas')) === 1)
 
+  // =========================================================
+  // Confirmación antes de descartar cambios sin guardar (issue #1)
+  // =========================================================
+  console.log('\n→ Confirmar descarte de cambios sin guardar')
+  await evalJs(`location.reload()`, true)
+  await sleep(2500)
+  await waitForSel('.budget-card')
+  await clickAction('budget-open')
+  await waitForSel('#b-jobname')
+
+  await clickAction('budget-back')
+  await sleep(400)
+  check('volver sin cambios no pide confirmación', !(await evalJs(`!!document.querySelector('.overlay')`)))
+
+  await clickAction('budget-open')
+  await waitForSel('#b-jobname')
+  const beforeBack = await field('#b-notes')
+  await setValue('#b-notes', 'Nota de prueba sin guardar')
+  await clickAction('budget-back')
+  await sleep(400)
+  check('volver con cambios pide confirmación', (await text('.overlay .dialog p')) === '¿Descartar cambios sin guardar?')
+  await click('.overlay [data-act="cancel"]')
+  await sleep(300)
+  check('cancelar conserva el editor', !!(await field('#b-jobname')))
+  check('cancelar conserva los cambios', (await field('#b-notes')) === 'Nota de prueba sin guardar')
+
+  await clickAction('budget-back')
+  await sleep(400)
+  await confirmDialog()
+  await sleep(400)
+  check('aceptar descarta y vuelve al inicio', (await count('#b-jobname')) === 0)
+  check('sin diálogo tras confirmar', !(await evalJs(`!!document.querySelector('.overlay')`)))
+
+  await clickAction('budget-open')
+  await waitForSel('#b-jobname')
+  check('el cambio descartado no persistió', (await field('#b-notes')) === beforeBack)
+  await clickAction('budget-back')
+  await sleep(400)
+  check('reabrir sin cambios no pide confirmación', !(await evalJs(`!!document.querySelector('.overlay')`)))
+
   // La compatibilidad con estructuras locales antiguas se valida en las pruebas de
   // dominio de parseBudget. La aplicación autenticada actual usa Firestore, por lo
   // que inyectar localStorage aquí no representa el flujo de producción.
