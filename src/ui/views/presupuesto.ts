@@ -47,6 +47,18 @@ function freshBudget(): Budget {
   }
 }
 
+// Acciones que no modifican la cotización: no deben marcar el editor como "sin guardar".
+const NON_DIRTY_ACTIONS = new Set([
+  'budget-back',
+  'section-new',
+  'section-edit',
+  'section-cancel',
+  'item-new',
+  'item-edit',
+  'item-cancel',
+  'total-toggle',
+])
+
 function currentBudget(app: App): Budget {
   if (!app.editingBudget) {
     app.editingBudget = freshBudget()
@@ -784,6 +796,20 @@ function applyCatalogItem(catItem: CatalogItem, doc: Document): void {
 }
 
 export function bind(budgetForm: HTMLFormElement, app: App): void {
+  const container = budgetForm.ownerDocument.getElementById('view') ?? budgetForm
+  const markDirty = (): void => {
+    app.dirty = true
+  }
+  container.addEventListener('input', markDirty)
+  container.addEventListener('change', markDirty)
+  container.addEventListener('click', (event) => {
+    const target = (event.target as HTMLElement | null)?.closest<HTMLElement>('[data-action]')
+    const action = target?.dataset.action
+    if (action && !NON_DIRTY_ACTIONS.has(action)) {
+      markDirty()
+    }
+  })
+
   budgetForm.addEventListener('input', (event) => {
     const target = event.target as HTMLElement
     if (target.matches('[name="discount"], [name="iva"], [name="overheadRate"], [name="ufValue"], [name="deductibleUf"]')) {
@@ -870,7 +896,14 @@ export function bind(budgetForm: HTMLFormElement, app: App): void {
 }
 
 export const handlers: Record<string, (app: App, param?: string) => void> = {
-  'budget-back': (app) => {
+  'budget-back': async (app) => {
+    if (app.dirty) {
+      const confirmed = await app.confirmDialog(STRINGS.confirmDiscardUnsaved)
+      if (!confirmed) {
+        return
+      }
+      app.dirty = false
+    }
     app.go('inicio')
   },
   'b-issuer-select': (app) => {
@@ -1249,6 +1282,7 @@ async function persistBudget(app: App, asDraft: boolean): Promise<void> {
     } else {
       app.state.budgets.push(clean)
     }
+    app.dirty = false
     app.toast(asDraft ? STRINGS.budgetDraftSaved : STRINGS.budgetSaved)
     app.go('inicio')
     return
@@ -1261,6 +1295,7 @@ async function persistBudget(app: App, asDraft: boolean): Promise<void> {
     app.state.budgets.push(clean)
   }
   await saveQuote(clean, app.uid!)
+  app.dirty = false
   app.toast(asDraft ? STRINGS.budgetDraftSaved : STRINGS.budgetSaved)
   app.go('inicio')
 }
